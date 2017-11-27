@@ -86,7 +86,7 @@ export class SearchService {
     if (!tags) return;
     for (let tag of tags) {
       if (tag['x-traitTag']) continue;
-      let id = `tag/${slugify(tag.name)}`;
+      let id = `tag/${tag.name}`;
       this.index({
         menuId: id,
         title: tag.name,

@@ -390,7 +390,7 @@ export class MenuService {
     let res = [];
     for (let tag of tags || []) {
       if (!tag) continue;
-      let id = 'tag/' + slugify(tag.name);
+      let id = 'tag/' + tag.name;
       let item: MenuItem;
 
       // don't put empty tag into menu, instead put their operations
