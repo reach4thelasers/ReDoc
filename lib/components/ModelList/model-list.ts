@@ -14,6 +14,8 @@ export class ModelList extends BaseComponent implements OnInit {
 
   tags:Array<any> = [];
 
+  modelDefinitions:Array<any> = [];
+
   constructor(specMgr:SpecManager, private menu: MenuService) {
     super(specMgr);
   }
@@ -27,19 +29,19 @@ export class ModelList extends BaseComponent implements OnInit {
     };
     flatMenuItems.forEach(menuItem => {
       // skip items that are not bound to swagger tags/operations
-      if (!menuItem.metadata) return;
+      if (!menuItem.metadata) {
+        return;
+      }
 
-      if (menuItem.metadata.type === 'tag') {
+      if (menuItem.metadata.type === 'model') {
         this.tags.push({
           ...menuItem,
           anchor: this.buildAnchor(menuItem.id)
         });
       }
-      if (menuItem.metadata.type === 'operation' && !menuItem.parent) {
-        emptyTag.items.push(menuItem);
-      }
     });
     if (emptyTag.items.length) this.tags.push(emptyTag);
+
   }
 
   buildAnchor(tagId):string {

@@ -1,3 +1,4 @@
+import { MenuItem } from './../../.tmp/lib/services/menu.service';
 'use strict';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,8 +15,8 @@ import * as slugify from 'slugify';
 
 
 const CHANGE = {
-  NEXT : 1,
-  BACK : -1,
+  NEXT: 1,
+  BACK: -1,
 };
 
 export interface TagGroup {
@@ -35,7 +36,7 @@ export interface MenuItem {
   active?: boolean;
   ready?: boolean;
 
-  depth?: string|number;
+  depth?: string | number;
   flatIdx?: number;
 
   metadata?: any;
@@ -59,11 +60,11 @@ export class MenuService {
   private _tagsWithOperations: any;
 
   constructor(
-    private hash:Hash,
+    private hash: Hash,
     private tasks: LazyTasksService,
     private scrollService: ScrollService,
     private appState: AppStateService,
-    private specMgr:SpecManager
+    private specMgr: SpecManager
   ) {
     this.hash = hash;
 
@@ -80,7 +81,7 @@ export class MenuService {
       this.onScroll(evt.isScrolledDown);
     });
 
-    this._hashSubscription =  this.hash.value.subscribe((hash) => {
+    this._hashSubscription = this.hash.value.subscribe((hash) => {
       this.onHashChange(hash);
     });
 
@@ -91,7 +92,7 @@ export class MenuService {
     });
   }
 
-  get flatItems():MenuItem[] {
+  get flatItems(): MenuItem[] {
     if (!this._flatItems) {
       this._flatItems = this.flatMenu();
     }
@@ -108,7 +109,7 @@ export class MenuService {
 
     // check if previous items§ can be enabled
     let prevItem = this.flatItems[idx -= 1];
-    while(prevItem && (!prevItem.metadata || prevItem.metadata.type === 'heading' || !prevItem.items)) {
+    while (prevItem && (!prevItem.metadata || prevItem.metadata.type === 'heading' || !prevItem.items)) {
       prevItem.ready = true;
       prevItem = this.flatItems[idx -= 1];
     }
@@ -119,7 +120,7 @@ export class MenuService {
   makeSureLastItemsEnabled() {
     let lastIdx = this.flatItems.length - 1;
     let item = this.flatItems[lastIdx];
-    while(item && (!item.metadata || !item.items)) {
+    while (item && (!item.metadata || !item.items)) {
       item.ready = true;
       item = this.flatItems[lastIdx -= 1];
     }
@@ -127,8 +128,8 @@ export class MenuService {
 
   onScroll(isScrolledDown) {
     let stable = false;
-    while(!stable) {
-      if(isScrolledDown) {
+    while (!stable) {
+      if (isScrolledDown) {
         let $nextEl = this.getEl(this.activeIdx + 1);
         if (!$nextEl) return;
         let nextInViewPos = this.scrollService.getElementPos($nextEl, true);
@@ -140,7 +141,7 @@ export class MenuService {
       let $currentEl = this.getCurrentEl();
       if (!$currentEl) return;
       var elementInViewPos = this.scrollService.getElementPos($currentEl);
-      if(!isScrolledDown && elementInViewPos === INVIEW_POSITION.ABOVE ) {
+      if (!isScrolledDown && elementInViewPos === INVIEW_POSITION.ABOVE) {
         stable = this.changeActive(CHANGE.BACK);
         continue;
       }
@@ -161,7 +162,7 @@ export class MenuService {
     }
   }
 
-  getEl(flatIdx:number):Element {
+  getEl(flatIdx: number): Element {
     if (flatIdx < 0) return null;
     if (flatIdx > this.flatItems.length - 1) return null;
     let currentItem = this.flatItems[flatIdx];
@@ -169,7 +170,7 @@ export class MenuService {
     if (currentItem.isGroup) currentItem = this.flatItems[flatIdx + 1];
 
     let selector = '';
-    while(currentItem) {
+    while (currentItem) {
       if (currentItem.id) {
         selector = `[section="${currentItem.id}"] ` + selector;
         // We only need to go up the chain for operations that
@@ -185,19 +186,19 @@ export class MenuService {
     return selector ? this.domRoot.querySelector(selector) : null;
   }
 
-  isTagOrGroupItem(flatIdx: number):boolean {
+  isTagOrGroupItem(flatIdx: number): boolean {
     let item = this.flatItems[flatIdx];
     return item && (item.isGroup || (item.metadata && item.metadata.type === 'tag'));
   }
 
-  getTagInfoEl(flatIdx: number):Element {
+  getTagInfoEl(flatIdx: number): Element {
     if (!this.isTagOrGroupItem(flatIdx)) return null;
 
     let el = this.getEl(flatIdx);
     return el && el.querySelector('.tag-info');
   }
 
-  getCurrentEl():Element {
+  getCurrentEl(): Element {
     return this.getEl(this.activeIdx);
   }
 
@@ -212,7 +213,7 @@ export class MenuService {
     }
   }
 
-  activate(item:MenuItem, force = false, replaceState = false) {
+  activate(item: MenuItem, force = false, replaceState = false) {
     if (!force && item && !item.ready) return;
 
     this.deactivate(this.activeIdx);
@@ -233,12 +234,12 @@ export class MenuService {
     this.changedActiveItem.next(item);
   }
 
-  activateByIdx(idx:number, force = false, replaceState = false) {
+  activateByIdx(idx: number, force = false, replaceState = false) {
     let item = this.flatItems[idx];
     this.activate(item, force, replaceState);
   }
 
-  changeActive(offset = 1):boolean {
+  changeActive(offset = 1): boolean {
     let noChange = (this.activeIdx <= 0 && offset === -1) ||
       (this.activeIdx === this.flatItems.length - 1 && offset === 1);
     this.activateByIdx(this.activeIdx + offset, false, true);
@@ -250,7 +251,7 @@ export class MenuService {
     if ($el) this.scrollService.scrollTo($el);
   }
 
-  activateByHash(hash):boolean {
+  activateByHash(hash): boolean {
     if (!hash) return;
     let idx = 0;
     hash = hash.substr(1);
@@ -288,7 +289,7 @@ export class MenuService {
 
   addMarkdownItems() {
     let schema = this.specMgr.schema;
-    let headings:StringMap<MarkdownHeading> = schema.info && schema.info['x-redoc-markdown-headers'] || {};
+    let headings: StringMap<MarkdownHeading> = schema.info && schema.info['x-redoc-markdown-headers'] || {};
     Object.keys(headings).forEach(h => {
       let heading = headings[h];
       let id = 'section/' + heading.id;
@@ -306,7 +307,7 @@ export class MenuService {
     });
   }
 
-  getMarkdownSubheaders(parent: MenuItem, parentHeading: MarkdownHeading):MenuItem[] {
+  getMarkdownSubheaders(parent: MenuItem, parentHeading: MarkdownHeading): MenuItem[] {
     let res = [];
 
     Object.keys(parentHeading.children || {}).forEach(h => {
@@ -327,7 +328,7 @@ export class MenuService {
     return res;
   }
 
-  getOperationsItems(parent: MenuItem, tag:any):MenuItem[] {
+  getOperationsItems(parent: MenuItem, tag: any): MenuItem[] {
     if (!tag.operations || !tag.operations.length) return null;
 
     let res = [];
@@ -350,9 +351,41 @@ export class MenuService {
     return res;
   }
 
+  getModelItems(parent:MenuItem):MenuItem[] {
+    if(!this.specMgr.schema.definitions) return null;
+
+    let res = [];
+    let definitions = this.specMgr.schema.definitions;
+    for(let modelName of Object.keys(definitions)){
+      let subItem = {
+        name: modelName,
+        id: "model/" + modelName,
+        description: definitions[modelName].description,
+        parent: parent,
+        metadata: {
+          type : "model",
+          pointer: "model/" + modelName
+        }
+
+        // id: operationInfo._pointer,
+        // description: operationInfo.description,
+        // metadata: {
+        //   type: 'operation',
+        //   pointer: operationInfo._pointer,
+        //   operationId: operationInfo.operationId,
+        //   operation: operationInfo.operation,
+        //   deprecated: !!operationInfo.deprecated
+        // },
+     
+      };
+      res.push(subItem);
+    }
+    return res;
+  }
+
   hashFor(
-    id: string|null, itemMeta:
-    {operationId?: string, type: string, pointer?: string},
+    id: string | null, itemMeta:
+      { operationId?: string, type: string, pointer?: string },
     parentId?: string
   ) {
     if (!id) return null;
@@ -367,7 +400,7 @@ export class MenuService {
     }
   }
 
-  getTagsItems(parent: MenuItem, tagGroup:TagGroup = null):MenuItem[] {
+  getTagsItems(parent: MenuItem, tagGroup: TagGroup = null): MenuItem[] {
     let schema = this.specMgr.schema;
 
     let tags;
@@ -415,7 +448,7 @@ export class MenuService {
     return res;
   }
 
-  getTagGroupsItems(parent: MenuItem, groups: TagGroup[]):MenuItem[] {
+  getTagGroupsItems(parent: MenuItem, groups: TagGroup[]): MenuItem[] {
     let res = [];
     for (let group of groups) {
       let item;
@@ -434,6 +467,21 @@ export class MenuService {
     return res;
   }
 
+  getTagModelMenu(parent: MenuItem): MenuItem {
+
+    let menuItem: MenuItem = {
+      name: "Models",
+      id: null,
+      description: 'Data Models',
+      parent: parent,
+      isGroup: true,
+      items: null
+    };
+
+    menuItem.items = this.getModelItems(menuItem);
+
+    return menuItem;
+  }
   checkAllTagsUsedInGroups() {
     for (let tag of Object.keys(this._tagsWithOperations)) {
       if (!this._tagsWithOperations[tag].used) {
@@ -452,9 +500,13 @@ export class MenuService {
     } else {
       this.items.push(...this.getTagsItems(null));
     }
+
+    if(this.specMgr.schema['definitions']){
+      this.items.push(this.getTagModelMenu(null));
+    }
   }
 
-  flatMenu():MenuItem[] {
+  flatMenu(): MenuItem[] {
     let menu = this.items;
     if (!menu) return;
     let res = [];
@@ -476,7 +528,7 @@ export class MenuService {
     return res;
   }
 
-  getItemById(id: string):MenuItem {
+  getItemById(id: string): MenuItem {
     return this.flatItems.find(item => item.id === id || item.id === `section/${id}`);
   }
 
