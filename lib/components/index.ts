@@ -1,6 +1,6 @@
-import { ModelList } from './ModelList/model-list';
 'use strict';
-
+import { DataModel } from './DataModel/data-model';
+import { DataModelList } from './DataModelList/data-model-list';
 import { ApiInfo } from './ApiInfo/api-info';
 import { ApiLogo } from './ApiLogo/api-logo';
 import { JsonSchema } from './JsonSchema/json-schema';
@@ -24,10 +24,10 @@ import { Redoc } from './Redoc/redoc';
 
 export const REDOC_DIRECTIVES = [
   ApiInfo, ApiLogo, JsonSchema, JsonSchemaLazy, ParamsList, RequestSamples, ResponsesList,
-  ResponsesSamples, SchemaSample, SideMenu, OperationsList, ModelList, Operation, Warnings, Redoc, SecurityDefinitions,
+  ResponsesSamples, SchemaSample, SideMenu, OperationsList, DataModelList, DataModel, Operation, Warnings, Redoc, SecurityDefinitions,
   LoadingBar, SideMenuItems, RedocSearch, ExternalDocs, EndpointLink
 ];
 
 export { ApiInfo, ApiLogo, JsonSchema, JsonSchemaLazy, ParamsList, RequestSamples, ResponsesList,
-ResponsesSamples, SchemaSample, SideMenu, OperationsList, ModelList, Operation, Warnings, Redoc, SecurityDefinitions,
+ResponsesSamples, SchemaSample, SideMenu, OperationsList, DataModelList, DataModel, Operation, Warnings, Redoc, SecurityDefinitions,
 LoadingBar, SideMenuItems, ExternalDocs, EndpointLink };

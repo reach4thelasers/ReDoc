@@ -4,12 +4,12 @@ import { BaseComponent, SpecManager } from '../base';
 import { MenuService } from '../../services/index';
 
 @Component({
-  selector: 'model-list',
-  templateUrl: './model-list.html',
-  styleUrls: ['./model-list.css'],
+  selector: 'data-model-list',
+  templateUrl: './data-model-list.html',
+  styleUrls: ['./data-model-list.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModelList extends BaseComponent implements OnInit {
+export class DataModelList extends BaseComponent implements OnInit {
   @Input() pointer:string;
 
   tags:Array<any> = [];

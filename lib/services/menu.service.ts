@@ -1,4 +1,3 @@
-import { MenuItem } from './../../.tmp/lib/services/menu.service';
 'use strict';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
