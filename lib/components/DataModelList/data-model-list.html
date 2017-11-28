@@ -1,4 +1,4 @@
-<h1>Model List</h1>
+
 
 <div class="operations">
   <div class="tag" *ngFor="let tag of tags; trackBy:trackByTagName" [attr.section]="tag.id">
@@ -8,11 +8,5 @@
       <json-schema-lazy [isRequestSchema]="true" [auto]="true" pointer="#/{{tag.pointer}}">
       </json-schema-lazy>
     </div>
-
-
-
-    <!-- <h1>schema</h1>
- -->
-
   </div>
 </div>
