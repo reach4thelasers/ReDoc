@@ -5,10 +5,14 @@
     <div class="tag-info" *ngIf="tag.name">
       <h1 class="sharable-header"> <a class="share-link" href="#{{tag.anchor}}"></a>{{tag.name}} </h1>
       <p *ngIf="tag.description" [innerHtml]="tag.description | marked"> </p>
-      <redoc-externalDocs [docs]="tag.metadata.externalDocs"></redoc-externalDocs>
+      <json-schema-lazy [isRequestSchema]="true" [auto]="true" pointer="#/{{tag.pointer}}">
+      </json-schema-lazy>
     </div>
-    <operation *lazyFor="let operation of tag.items; let ready = ready;"
-    [hidden]="!ready" [pointer]="operation.metadata.pointer"
-    [parentTagId]="tag.id" [attr.section]="operation.id"></operation>
+
+
+
+    <!-- <h1>schema</h1>
+ -->
+
   </div>
 </div>

@@ -358,12 +358,12 @@ export class MenuService {
     for(let modelName of Object.keys(definitions)){
       let subItem = {
         name: modelName,
-        id: "model/" + modelName,
+        id: "definitions/" + modelName,
         description: definitions[modelName].description,
         parent: parent,
         metadata: {
           type : "model",
-          pointer: "model/" + modelName
+          pointer: "definitions/" + modelName
         }
 
         // id: operationInfo._pointer,

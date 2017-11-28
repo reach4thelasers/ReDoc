@@ -36,11 +36,17 @@ export class DataModelList extends BaseComponent implements OnInit {
       if (menuItem.metadata.type === 'model') {
         this.tags.push({
           ...menuItem,
-          anchor: this.buildAnchor(menuItem.id)
+          anchor: this.buildAnchor(menuItem.id),
+          pointer: menuItem.metadata.pointer
         });
       }
     });
     if (emptyTag.items.length) this.tags.push(emptyTag);
+
+    var firstDefinition = this.specMgr.schema.definitions.Dog;
+
+
+    console.log(firstDefinition);
 
   }
 
