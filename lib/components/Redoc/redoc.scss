@@ -267,7 +267,7 @@ footer {
 
 :host /deep/ .redoc-markdown-block {
   pre {
-    font-family: Courier, monospace;
+    font-family: Monaco,Consolas,"Liberation Mono","Courier New",monospace;
     white-space: pre-wrap;
     background-color: #263238;
     color: white;
@@ -289,7 +289,7 @@ footer {
   }
 
   code {
-    font-family: Courier, monospace;
+    font-family: Monaco,Consolas,"Liberation Mono","Courier New",monospace;
     background-color: rgba(38, 50, 56, 0.04);
     padding: 0.1em 0.2em 0.2em;
     font-size: 1em;
