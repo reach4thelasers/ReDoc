@@ -1,14 +1,14 @@
 'use strict';
 
 import { Injectable } from '@angular/core';
-import * as slugify from 'slugify';
+import slugify from 'slugify';
 import * as Remarkable from 'remarkable';
 import { StringMap } from './';
 
 function HTMLescape(html: string): string {
-  return document.createElement('div')
+  return (document.createElement('div')
     .appendChild(document.createTextNode(html))
-    .parentElement
+    .parentNode as Element)
     .innerHTML;
 }
 
